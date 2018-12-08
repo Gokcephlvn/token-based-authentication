@@ -11,16 +11,26 @@ export class UserDashboardComponent implements OnInit {
 
   username = '';
   constructor(private myService:MyserviceService,
-  private _router: Router) { 
+  private _router: Router) 
+  { 
     this.myService.getUserName()
     .subscribe(
       data => this.username= data.toString(),
       error => this._router.navigate(['/main/login'])
     )
   }
+  
 
   ngOnInit() {
   }
+  email=''
+  delete(){
+    this.myService.deleteUser().subscribe(
+      data=>this.email=data.toString()
+    )
+    localStorage.removeItem('token');
+  }
+ 
 
   logout(){
     localStorage.removeItem('token');

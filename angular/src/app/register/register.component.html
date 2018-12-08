@@ -16,10 +16,27 @@
             </div>
             <div>
                 <mat-form-field style="width:100%;">
+                    <input list="bloodGroup" type="text" formControlName="bloodGroup" matInput placeholder="BloodGroup" id="user">
+                    <datalist id="bloodGroup">
+                        <option value="Arh+">
+                        <option value="Brh+">
+                        <option value="ABrh+">
+                        <option value="0rh+">
+                        <option value="Arh-">
+                        <option value="Brh-">
+                        <option value="ABrh-">
+                        <option value="0rh-">
+                      </datalist>
+                </mat-form-field>
+                <span *ngIf="isValid('bloodGroup')">BloodGroup is required</span>
+            </div>
+            <div>
+                <mat-form-field style="width:100%;">
                     <input type="password" formControlName="password" matInput placeholder="Password" id="pass">
                 </mat-form-field>
                 <span *ngIf="isValid('password')">Password is a mandatory field</span>
             </div>
+        
             <div>
                 <mat-form-field style="width:100%;">
                     <input type="password" formControlName="cnfpass" matInput placeholder="Re-enter Password" id="cnfpass">
@@ -43,3 +60,24 @@
         </div>
     </div>
 </div>
+
+
+<!--
+
+
+      <div class="form-group">
+          <label for="bloodGroup"> BloodGroup </label>
+          <input list="bloodGroup" class="form-control" type="text" name="bloodGroup" placeholder="bloodGroup"
+            [(ngModel)]="credentials.bloodGroup">
+          <datalist id="bloodGroup">
+            <option value="Arh+">
+            <option value="Brh+">
+            <option value="ABrh+">
+            <option value="0rh+">
+            <option value="Arh-">
+            <option value="Brh-">
+            <option value="ABrh-">
+            <option value="0rh-">
+          </datalist>
+        </div>
+-->

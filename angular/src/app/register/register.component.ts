@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MyserviceService } from '../myservice.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { InternationalPhoneModule } from 'ng4-intl-phone';
+
 
 @Component({
   selector: 'app-register',
@@ -19,7 +21,11 @@ export class RegisterComponent implements OnInit {
       email: new FormControl(null, Validators.email),
       username: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
-      cnfpass: new FormControl(null, this.passValidator)
+      cnfpass: new FormControl(null, this.passValidator),
+      bloodGroup:new FormControl(null,Validators.required),
+     
+      
+    
     });
 
     this.myForm.controls.password.valueChanges

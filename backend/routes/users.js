@@ -8,7 +8,11 @@ router.post('/register',  function(req,res,next){
     email: req.body.email,
     username: req.body.username,
     password: User.hashPassword(req.body.password),
-    creation_dt: Date.now()
+    bloodGroup:req.body.bloodGroup,
+    creation_dt: Date.now(),
+    isDelete: false,
+    deletion_dt:null
+   
   });
 
   let promise = user.save();
@@ -27,9 +31,11 @@ router.post('/login', function(req,res,next){
 
    promise.then(function(doc){
     if(doc) {
-      if(doc.isValid(req.body.password)){
+      if(doc.isDelete==false&& doc.isValid(req.body.password)){
           // generate token
-          let token = jwt.sign({username:doc.username},'secret', {expiresIn : '3h'});
+          let token = jwt.sign({username:doc.username,
+                                id:doc.id,
+                                isDelete:doc.isDelete  },'secret', {expiresIn : '3h'});
 
           return res.status(200).json(token);
 
@@ -48,8 +54,25 @@ router.post('/login', function(req,res,next){
 })
 
 router.get('/username', verifyToken, function(req,res,next){
+ 
   return res.status(200).json(decodedToken.username);
 })
+router.get('/delete',verifyToken,function(req,res,next){
+  let userFindByid=decodedToken.id;
+    User.findByIdAndUpdate(userFindByid,{$set:{"isDelete":true,"deletion_dt":Date.now()}}, function(err, result){
+        if(err){
+            console.log(err);
+        }
+        console.log(result)
+       
+
+        return res.status(200).json(result.username);
+    });
+
+
+})
+
+
 
 var decodedToken='';
 function verifyToken(req,res,next){
